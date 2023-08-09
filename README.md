@@ -204,7 +204,7 @@ data:
 
 ### Prerequisites
 
-Use Home Assistant v2022.6.0 or above.
+Use Home Assistant v2023.2.0 or above.
 
 ### Google Account security
 
@@ -216,6 +216,10 @@ We encourage you to create a separate Google account and add it to your Google H
 Your second account would not have access to anything other than Google Home, so even if it
 gets compromised, it's not as severe as losing your main google account.
 See more discussion [here](https://github.com/leikoilja/ha-google-home/issues/124#issuecomment-921773489)
+
+### Master token
+
+Due to authentication issues with google credentials alone it may be required to get the master token separately and provide it during the setup process. This can be done using [this script](https://gist.github.com/rithvikvibhu/952f83ea656c6782fbd0f1645059055d) or [glocaltokens](https://github.com/leikoilja/glocaltokens#quickstart) package.
 
 ### HACS Installation
 
@@ -381,6 +385,15 @@ It may be that your device and Home Assistant installation are not on the same n
 
 The integration works by connecting to the Google's servers to authenticate and get the authorisation keys for controlling these devices, but after that, all the requests are made locally, so it's required that the server and devices are on the same network. You can use a VPN or setup routing between each network to overcome this issue.
 
+### "version GLIBC_2.34 not found"
+
+Your system has old version of GLIBC and therefore not compatible with pre-compiled version of grpcio.
+But you can build it from sources for your system. For that in HA virtualenv run (use the version of `grpcio` from [glocaltokens](https://github.com/leikoilja/glocaltokens/blob/master/pyproject.toml)):
+
+```
+pip install -U grpcio==1.46.1 --no-binary=grpcio --force-reinstall
+```
+
 ## Contribution
 
 If you encounter issues or have any suggestions consider opening issues and contributing through PR.
@@ -394,9 +407,11 @@ Currently the integration supports the following languages:
 - Danish
 - Dutch
 - English
+- French
 - German (Germany)
 - Italian (Italy)
 - Norwegian (bokmål and nynorsk)
+- Polish
 - Portuguese (Portugal)
 - Portuguese (Brazil)
 - Spanish (Spain)
@@ -419,7 +434,7 @@ If you want to translate the project to your own language, follow the [Localizat
 [integration_blueprint]: https://github.com/custom-components/integration_blueprint
 [releases-shield]: https://img.shields.io/github/release/leikoilja/ha-google-home.svg?style=for-the-badge
 [releases]: https://github.com/leikoilja/ha-google-home/releases
-[workflow-shield]: https://img.shields.io/github/workflow/status/leikoilja/ha-google-home/Linting?style=for-the-badge
+[workflow-shield]: https://img.shields.io/github/actions/workflow/status/leikoilja/ha-google-home/linting.yaml?branch=master&style=for-the-badge
 [workflow]: https://github.com/leikoilja/ha-google-home/actions
 [installs-shield]: https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Frunkit.io%2Fkapji%2Fgoogle-home-installs-for-shield-io%2F3.0.0
 [installs]: https://analytics.home-assistant.io/custom_integrations.json
